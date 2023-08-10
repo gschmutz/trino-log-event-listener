@@ -20,3 +20,11 @@ log-event-listener.log-completed=true
 log-event-listener.log-split=false
 log-event-listener.replace-new-lines=true
 ```
+
+### Sample Output
+
+Here an example of a log line with the configuration from above (instance of a `QueryCompletedEvent`. 
+
+```bash
+2023-08-10T13:54:11.841Z	INFO	dispatcher-query-2	io.trino.plugin.eventlistener.log.LogEventListener	QueryCompletedEvent: queryId=20230810_135410_00001_qget4,principal=trino,executionStartTime=1691675650171,query=select * from tpch.sf1.customer ,failureMessage=Query was canceled
+```
