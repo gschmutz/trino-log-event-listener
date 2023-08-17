@@ -88,7 +88,7 @@ public class LogEventListener
         if (logDateInIsoFormat) {
             message.append("createTimeIso=").append(event.getCreateTime().toString()).append(",");
         }
-        message.append("query=").append(rpelaceSpecialCharaters(event.getMetadata().getQuery(), replaceNewLines));
+        message.append("query=").append(replaceSpecialCharaters(event.getMetadata().getQuery(), replaceNewLines));
 
         return message.toString();
     }
@@ -102,14 +102,16 @@ public class LogEventListener
                 message.append("principal=").append(principal).append(","));
         if (logDateInUnixFormat) {
             message.append("executionStartTimeUnix=").append(event.getExecutionStartTime().toEpochMilli()).append(",");
+            message.append("endTimeUnix=").append(event.getEndTime().toEpochMilli()).append(",");
         }
         if (logDateInIsoFormat) {
             message.append("executionStartTimeIso=").append(event.getExecutionStartTime().toString()).append(",");
+            message.append("endTimeIso=").append(event.getEndTime().toString()).append(",");
         }
-        message.append("query=").append(rpelaceSpecialCharaters(event.getMetadata().getQuery(), replaceNewLines)).append(",");
         event.getFailureInfo().ifPresent(failureInfo ->
                 failureInfo.getFailureMessage().ifPresent(failureMessage ->
                         message.append("failureMessage=").append(failureMessage)));
+        message.append("query=").append(replaceSpecialCharaters(event.getMetadata().getQuery(), replaceNewLines)).append(",");
 
         return message.toString();
     }
@@ -132,7 +134,7 @@ public class LogEventListener
         return message.toString();
     }
 
-    private String rpelaceSpecialCharaters(String query, boolean replaceNewLines)
+    private String replaceSpecialCharaters(String query, boolean replaceNewLines)
     {
         String value = query;
         if (replaceNewLines) {
