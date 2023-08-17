@@ -110,8 +110,8 @@ public class LogEventListener
         }
         event.getFailureInfo().ifPresent(failureInfo ->
                 failureInfo.getFailureMessage().ifPresent(failureMessage ->
-                        message.append("failureMessage=").append(failureMessage)));
-        message.append("query=").append(replaceSpecialCharaters(event.getMetadata().getQuery(), replaceNewLines)).append(",");
+                        message.append("failureMessage=").append(failureMessage).append(",")));
+        message.append("query=").append(replaceSpecialCharaters(event.getMetadata().getQuery(), replaceNewLines));
 
         return message.toString();
     }
@@ -140,7 +140,7 @@ public class LogEventListener
         if (replaceNewLines) {
             value = value.replaceAll("[\\r\\n]", " ");
         }
-        value = query.stripLeading();
+        value = value.stripLeading();
         return value;
     }
 }
