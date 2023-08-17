@@ -28,5 +28,5 @@ log-event-listener.log-date-in-iso-format=false
 Here an example of a log line with the configuration from above (instance of a `QueryCompletedEvent`. 
 
 ```bash
-2023-08-10T13:54:11.841Z	INFO	dispatcher-query-2	io.trino.plugin.eventlistener.log.LogEventListener	QueryCompletedEvent: queryId=20230810_135410_00001_qget4,principal=trino,executionStartTime=1691675650171,query=select * from tpch.sf1.customer ,failureMessage=Query was canceled
+2023-08-17T20:27:57.137Z	INFO	dispatcher-query-2	io.trino.plugin.eventlistener.log.LogEventListener	QueryCompletedEvent: queryId=20230817_202756_00000_p8h22,principal=trino,executionStartTimeUnix=1692304076180,endTimeUnix=1692304077047,executionStartTimeIso=2023-08-17T20:27:56.180Z,endTimeIso=2023-08-17T20:27:57.047Z,failureMessage=Query was canceled,query=select  *  from tpcds.sf1.customer 
 ```
