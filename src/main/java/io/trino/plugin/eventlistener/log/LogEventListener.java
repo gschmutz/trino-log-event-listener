@@ -34,6 +34,8 @@ public class LogEventListener
     private final boolean logCompleted;
     private final boolean logSplit;
     private final boolean replaceNewLines;
+    private final boolean logDateInUnixFormat;
+    private final boolean logDateInIsoFormat;
 
     @Inject
     public LogEventListener(
@@ -45,6 +47,8 @@ public class LogEventListener
         this.logCompleted = config.getLogCompleted();
         this.logSplit = config.getLogSplit();
         this.replaceNewLines = config.getReplaceNewLines();
+        logDateInUnixFormat = config.getLogDateInUnixFormat();
+        this.logDateInIsoFormat = config.getLogDateInIsoFormat();
     }
 
     @Override
@@ -78,7 +82,12 @@ public class LogEventListener
         message.append("queryId=").append(event.getMetadata().getQueryId()).append(",");
         event.getContext().getPrincipal().ifPresent(principal ->
                 message.append("principal=").append(principal).append(","));
-        message.append("createTime=").append(event.getCreateTime().toEpochMilli()).append(",");
+        if (logDateInUnixFormat) {
+            message.append("createTimeUnix=").append(event.getCreateTime().toEpochMilli()).append(",");
+        }
+        if (logDateInIsoFormat) {
+            message.append("createTimeIso=").append(event.getCreateTime().toString()).append(",");
+        }
         message.append("query=").append(rpelaceSpecialCharaters(event.getMetadata().getQuery(), replaceNewLines));
 
         return message.toString();
@@ -91,7 +100,12 @@ public class LogEventListener
         message.append("queryId=").append(event.getMetadata().getQueryId()).append(",");
         event.getContext().getPrincipal().ifPresent(principal ->
                 message.append("principal=").append(principal).append(","));
-        message.append("executionStartTime=").append(event.getExecutionStartTime().toEpochMilli()).append(",");
+        if (logDateInUnixFormat) {
+            message.append("executionStartTimeUnix=").append(event.getExecutionStartTime().toEpochMilli()).append(",");
+        }
+        if (logDateInIsoFormat) {
+            message.append("executionStartTimeIso=").append(event.getExecutionStartTime().toString()).append(",");
+        }
         message.append("query=").append(rpelaceSpecialCharaters(event.getMetadata().getQuery(), replaceNewLines)).append(",");
         event.getFailureInfo().ifPresent(failureInfo ->
                 failureInfo.getFailureMessage().ifPresent(failureMessage ->
@@ -105,7 +119,12 @@ public class LogEventListener
         StringBuilder message = new StringBuilder();
         message.append(event.getClass().getSimpleName()).append(": ");
         message.append("queryId=").append(event.getQueryId()).append(",");
-        message.append("createTime=").append(event.getCreateTime().toEpochMilli()).append(",");
+        if (logDateInUnixFormat) {
+            message.append("createTimeUnix=").append(event.getCreateTime().toEpochMilli()).append(",");
+        }
+        if (logDateInIsoFormat) {
+            message.append("createTimeIso=").append(event.getCreateTime().toString()).append(",");
+        }
         message.append("payload=").append(event.getPayload()).append(",");
         event.getFailureInfo().ifPresent(failureInfo ->
                 message.append("failureMessage=").append(failureInfo.getFailureMessage()));
@@ -119,6 +138,7 @@ public class LogEventListener
         if (replaceNewLines) {
             value = value.replaceAll("[\\r\\n]", " ");
         }
+        value = query.stripLeading();
         return value;
     }
 }

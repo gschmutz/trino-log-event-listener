@@ -19,6 +19,8 @@ log-event-listener.log-created=false
 log-event-listener.log-completed=true
 log-event-listener.log-split=false
 log-event-listener.replace-new-lines=true
+log-event-listener.log-date-in-liux-format=true
+log-event-listener.log-date-in-iso-format=false
 ```
 
 ### Sample Output

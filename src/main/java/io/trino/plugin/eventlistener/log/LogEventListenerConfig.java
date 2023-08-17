@@ -21,6 +21,8 @@ public class LogEventListenerConfig
     private boolean logCreated;
     private boolean logCompleted;
     private boolean logSplit;
+    private boolean logDateInUnixFormat;
+    private boolean logDateInIsoFormat;
 
     private boolean replaceNewLines;
 
@@ -74,5 +76,31 @@ public class LogEventListenerConfig
     public boolean getReplaceNewLines()
     {
         return this.replaceNewLines;
+    }
+
+    @ConfigDescription("Log Date fields using unix (epoc) format")
+    @Config("log-event-listener.log-date-in-unix-format")
+    public LogEventListenerConfig setLogDateInUnixFormat(boolean logDateInUnixFormat)
+    {
+        this.logDateInUnixFormat = logDateInUnixFormat;
+        return this;
+    }
+
+    public boolean getLogDateInUnixFormat()
+    {
+        return this.logDateInUnixFormat;
+    }
+
+    @ConfigDescription("Log Date fields using ISO format")
+    @Config("log-event-listener.log-date-in-iso-format")
+    public LogEventListenerConfig setLogDateInIsoFormat(boolean logDataInIsoFormat)
+    {
+        this.logDateInIsoFormat = logDataInIsoFormat;
+        return this;
+    }
+
+    public boolean getLogDateInIsoFormat()
+    {
+        return this.logDateInIsoFormat;
     }
 }
